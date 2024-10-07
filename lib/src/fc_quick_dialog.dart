@@ -109,7 +109,7 @@ class FcQuickDialog {
   static Future<String?> textInput(BuildContext context,
       {required String title,
       required String okText,
-      required String cancelText,
+      required String? cancelText,
       bool password = false,
       String? initialValue,
       String? subTitle}) async {
@@ -141,12 +141,13 @@ class FcQuickDialog {
             ],
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text(cancelText),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+            if (cancelText != null)
+              TextButton(
+                child: Text(cancelText),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             TextButton(
               onPressed: onOKDone,
               child: Text(okText),

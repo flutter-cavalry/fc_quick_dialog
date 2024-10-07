@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Allow nullable `cancelText` in `textInput`.
+
 ## 0.0.1
 
-* TODO: Describe initial release.
+- Initial release
