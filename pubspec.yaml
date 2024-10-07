@@ -1,0 +1,23 @@
+name: fc_quick_dialog
+description: "Quick and simple dialogs like JavaScript's `alert`, `confirm` and `prompt`."
+version: 0.0.1
+homepage: https://github.com/flutter-cavalry/fc_quick_dialog
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=1.17.0"
+
+platforms:
+  android:
+  ios:
+  macos:
+  windows:
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
