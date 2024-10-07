@@ -80,6 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             OutlinedButton(
                 onPressed: () async {
+                  await FcQuickDialog.info(context,
+                      title: 'Info', content: 'Hello, World!', okText: 'OK');
+                },
+                child: const Text('Info')),
+            const SizedBox(height: 10),
+            OutlinedButton(
+                onPressed: () async {
                   await FcQuickDialog.error(context,
                       error: 'Exception: Test plugin error',
                       title: 'Error',
@@ -97,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (!context.mounted) {
                     return;
                   }
-                  await FcQuickDialog.standard(context,
+                  await FcQuickDialog.info(context,
                       title: 'Info',
                       okText: 'OK',
                       content: 'You selected "${_resultToString(result)}"');
@@ -115,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (!context.mounted) {
                     return;
                   }
-                  await FcQuickDialog.standard(context,
+                  await FcQuickDialog.info(context,
                       title: 'Info',
                       okText: 'OK',
                       content: 'You selected "${_resultToString(result)}"');
@@ -134,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (!context.mounted) {
                     return;
                   }
-                  await FcQuickDialog.standard(context,
+                  await FcQuickDialog.info(context,
                       title: 'Info',
                       okText: 'OK',
                       content: 'You entered "$result"');
@@ -153,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (!context.mounted) {
                     return;
                   }
-                  await FcQuickDialog.standard(context,
+                  await FcQuickDialog.info(context,
                       title: 'Info',
                       okText: 'OK',
                       content: 'You entered "$result"');

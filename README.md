@@ -16,7 +16,7 @@ final result = await FcQuickDialog.confirm(context,
     content: 'Are you sure?');
 
 // Standard dialog.
-await FcQuickDialog.standard(context,
+await FcQuickDialog.info(context,
     title: 'Info',
     okText: 'OK',
     content: 'You selected $result');

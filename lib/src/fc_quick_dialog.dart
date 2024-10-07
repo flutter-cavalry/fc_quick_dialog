@@ -5,7 +5,7 @@ const _dartExpPrefix = 'Exception: ';
 
 class FcQuickDialog {
   /// Shows a standard alert dialog with [title], [content] and [okText].
-  static Future<void> standard(BuildContext context,
+  static Future<void> info(BuildContext context,
       {required String? title, String? content, required String okText}) async {
     if (!context.mounted) {
       return;
