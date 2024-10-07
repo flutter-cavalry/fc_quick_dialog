@@ -80,9 +80,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             OutlinedButton(
                 onPressed: () async {
-                  await FcQuickDialog.error(
-                      context, 'Exception: Test plugin error',
-                      title: 'Error', okText: 'OK');
+                  await FcQuickDialog.error(context,
+                      error: 'Exception: Test plugin error',
+                      title: 'Error',
+                      okText: 'OK');
                 },
                 child: const Text('Error')),
             const SizedBox(height: 10),
@@ -120,6 +121,44 @@ class _MyHomePageState extends State<MyHomePage> {
                       content: 'You selected "${_resultToString(result)}"');
                 },
                 child: const Text('Confirm (Yes/No/Cancel)')),
+            const SizedBox(height: 10),
+            OutlinedButton(
+                onPressed: () async {
+                  final result = await FcQuickDialog.textInput(
+                    context,
+                    title: 'Enter a text',
+                    subTitle: 'This is a subtitle',
+                    okText: 'OK',
+                    cancelText: 'Cancel',
+                  );
+                  if (!context.mounted) {
+                    return;
+                  }
+                  await FcQuickDialog.standard(context,
+                      title: 'Info',
+                      okText: 'OK',
+                      content: 'You entered "$result"');
+                },
+                child: const Text('Text input')),
+            const SizedBox(height: 10),
+            OutlinedButton(
+                onPressed: () async {
+                  final result = await FcQuickDialog.textInput(
+                    context,
+                    title: 'Enter your password',
+                    password: true,
+                    okText: 'OK',
+                    cancelText: 'Cancel',
+                  );
+                  if (!context.mounted) {
+                    return;
+                  }
+                  await FcQuickDialog.standard(context,
+                      title: 'Info',
+                      okText: 'OK',
+                      content: 'You entered "$result"');
+                },
+                child: const Text('Password input')),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

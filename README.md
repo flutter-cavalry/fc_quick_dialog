@@ -23,6 +23,26 @@ await FcQuickDialog.standard(context,
 
 // Error dialog.
 await FcQuickDialog.error(
-    context, 'Exception: Test plugin error',
-    title: 'Error', okText: 'OK');
+    context,
+    error: 'Exception: Test plugin error',
+    title: 'Error',
+    okText: 'OK');
+
+// Text input dialog.
+final text = await FcQuickDialog.textInput(
+    context,
+    title: 'Enter a text',
+    subTitle: 'This is a subtitle',
+    okText: 'OK',
+    cancelText: 'Cancel',
+  );
+
+// Password input dialog.
+final pwd = await FcQuickDialog.textInput(
+    context,
+    title: 'Enter your password',
+    password: true,
+    okText: 'OK',
+    cancelText: 'Cancel',
+  );
 ```

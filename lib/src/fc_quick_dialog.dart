@@ -30,7 +30,8 @@ class FcQuickDialog {
     );
   }
 
-  /// Shows a confirmation dialog with [title], [content], [yesText], [noText].
+  /// Shows a confirm dialog with [title], [content], [yesText], [noText].
+  ///
   /// If [cancelText] is not null, a cancel button will be added to the dialog.
   /// Returns true if the user selects yes, false if the user selects no, and
   /// null if the user cancels the dialog.
@@ -75,9 +76,11 @@ class FcQuickDialog {
     );
   }
 
-  /// Shows an error dialog with [title], [err], and [okText].
-  static Future<void> error(BuildContext context, Object err,
-      {required String? title, required String okText}) async {
+  /// Shows an error dialog with [title], [error], and [okText].
+  static Future<void> error(BuildContext context,
+      {required String? title,
+      required Object error,
+      required String okText}) async {
     if (!context.mounted) {
       return;
     }
@@ -87,7 +90,7 @@ class FcQuickDialog {
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
         title: title == null ? null : Text(title),
-        content: SelectableText(extractErrorMessage(err)),
+        content: SelectableText(extractErrorMessage(error)),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -95,6 +98,62 @@ class FcQuickDialog {
           ),
         ],
       ),
+    );
+  }
+
+  /// Shows a text input dialog with [title], [okText], and [cancelText].
+  ///
+  /// If [subTitle] is not null, it will be displayed above the text field.
+  /// If [password] is true, the text field will be obscured.
+  /// [initialValue] is the initial value of the text field.
+  static Future<String?> textInput(BuildContext context,
+      {required String title,
+      required String okText,
+      required String cancelText,
+      bool password = false,
+      String? initialValue,
+      String? subTitle}) async {
+    final controller = TextEditingController(text: initialValue);
+    void onOKDone() {
+      if (controller.text.isEmpty) {
+        return;
+      }
+      Navigator.pop(context, controller.text);
+    }
+
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (subTitle != null) Text(subTitle),
+              if (subTitle != null) const SizedBox(height: 10),
+              TextField(
+                controller: controller,
+                autofocus: true,
+                obscureText: password,
+                onSubmitted: (value) => onOKDone(),
+              )
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(cancelText),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              onPressed: onOKDone,
+              child: Text(okText),
+            ),
+          ],
+        );
+      },
     );
   }
 
