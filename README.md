@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/fc_quick_dialog.svg)](https://pub.dev/packages/fc_quick_dialog)
 
-Quick and simple dialogs like JavaScript's `alert`, `confirm` and `prompt`.
+Quick and simple material-based dialogs like JavaScript's `alert`, `confirm` and `prompt`.
 
 ## Usage
 
