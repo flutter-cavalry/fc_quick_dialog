@@ -5,8 +5,16 @@ const _dartExpPrefix = 'Exception: ';
 
 class FcQuickDialog {
   /// Shows a standard alert dialog with [title], [content] and [okText].
-  static Future<void> info(BuildContext context,
-      {required String? title, String? content, required String okText}) async {
+  /// If [titleWidget] is not null, it will be displayed instead of [title].
+  /// If [contentWidget] is not null, it will be displayed instead of [content].
+  static Future<void> info(
+    BuildContext context, {
+    String? title,
+    String? content,
+    required String okText,
+    Widget? titleWidget,
+    Widget? contentWidget,
+  }) async {
     if (!context.mounted) {
       return;
     }
@@ -15,9 +23,12 @@ class FcQuickDialog {
       onPressed: () => Navigator.of(context).pop(),
     );
 
+    titleWidget ??= title == null ? null : Text(title);
+    contentWidget ??= content == null ? null : SelectableText(content);
+
     final alert = AlertDialog(
-      title: title == null ? null : Text(title),
-      content: content == null ? null : SelectableText(content),
+      title: titleWidget,
+      content: contentWidget,
       actions: [okButton],
     );
 
@@ -35,12 +46,18 @@ class FcQuickDialog {
   /// If [cancelText] is not null, a cancel button will be added to the dialog.
   /// Returns true if the user selects yes, false if the user selects no, and
   /// null if the user cancels the dialog.
-  static Future<bool?> confirm(BuildContext context,
-      {required String? title,
-      String? content,
-      required String yesText,
-      required String noText,
-      String? cancelText}) async {
+  /// If [titleWidget] is not null, it will be displayed instead of [title].
+  /// If [contentWidget] is not null, it will be displayed instead of [content].
+  static Future<bool?> confirm(
+    BuildContext context, {
+    required String yesText,
+    required String noText,
+    String? title,
+    String? content,
+    String? cancelText,
+    Widget? titleWidget,
+    Widget? contentWidget,
+  }) async {
     if (!context.mounted) {
       return false;
     }
@@ -61,9 +78,12 @@ class FcQuickDialog {
       buttons.add(cancelButton);
     }
 
+    titleWidget ??= title == null ? null : Text(title);
+    contentWidget ??= content == null ? null : SelectableText(content);
+
     final alert = AlertDialog(
-      title: title == null ? null : Text(title),
-      content: content == null ? null : SelectableText(content),
+      title: titleWidget,
+      content: contentWidget,
       actions: buttons,
     );
 
@@ -77,20 +97,27 @@ class FcQuickDialog {
   }
 
   /// Shows an error dialog with [title], [error], and [okText].
-  static Future<void> error(BuildContext context,
-      {required String? title,
-      required Object error,
-      required String okText}) async {
+  /// [error] can be any object including a [Widget].
+  ///
+  static Future<void> error(
+    BuildContext context, {
+    required Object error,
+    required String okText,
+    String? title,
+    Widget? titleWidget,
+  }) async {
     if (!context.mounted) {
       return;
     }
-
+    titleWidget ??= title == null ? null : Text(title);
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-        title: title == null ? null : Text(title),
-        content: SelectableText(extractErrorMessage(error)),
+        title: titleWidget,
+        content: error is Widget
+            ? error
+            : SelectableText(extractErrorMessage(error)),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context),

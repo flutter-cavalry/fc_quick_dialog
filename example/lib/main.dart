@@ -166,6 +166,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       content: 'You entered "$result"');
                 },
                 child: const Text('Password input')),
+            const SizedBox(height: 10),
+            OutlinedButton(
+                onPressed: () async {
+                  await FcQuickDialog.info(context,
+                      titleWidget: const Text(
+                        'Bold and Blue Text',
+                        style: TextStyle(
+                          color: Colors.blue, // Sets the text color to blue
+                          fontWeight: FontWeight.bold, // Makes the text bold
+                          fontSize: 16, // Optional: Sets the font size
+                        ),
+                      ),
+                      contentWidget: const Text(
+                        'This is a custom widget',
+                        style: TextStyle(
+                          color: Colors.green, // Sets the text color to green
+                          fontSize: 14, // Optional: Sets the font size
+                        ),
+                      ),
+                      okText: 'OK');
+                },
+                child: const Text('Custom widget')),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
