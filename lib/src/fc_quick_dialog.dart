@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 const _dartExpPrefix = 'Exception: ';
 
@@ -187,14 +186,7 @@ class FcQuickDialog {
 
   /// Extracts the error message from [err].
   static String extractErrorMessage(Object err) {
-    String? msg;
-    if (err is PlatformException) {
-      msg = err.message;
-    }
-    // ignore: prefer_conditional_assignment
-    if (msg == null) {
-      msg = err.toString();
-    }
+    var msg = err.toString();
     if (msg.startsWith(_dartExpPrefix) == true) {
       msg = msg.substring(_dartExpPrefix.length);
     }

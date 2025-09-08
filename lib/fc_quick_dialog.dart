@@ -1,3 +1,3 @@
-library fc_quick_dialog;
+library;
 
 export 'src/fc_quick_dialog.dart';
