@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Move to `material_ui` package.
+
 ## 0.1.0
 
 - Allow title and content widgets in most APIs.
