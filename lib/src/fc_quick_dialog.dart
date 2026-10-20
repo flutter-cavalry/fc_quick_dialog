@@ -17,25 +17,23 @@ class FcQuickDialog {
     if (!context.mounted) {
       return;
     }
-    final Widget okButton = TextButton(
-      child: Text(okText),
-      onPressed: () => Navigator.of(context).pop(),
-    );
-
     titleWidget ??= title == null ? null : Text(title);
     contentWidget ??= content == null ? null : SelectableText(content);
-
-    final alert = AlertDialog(
-      title: titleWidget,
-      content: contentWidget,
-      actions: [okButton],
-    );
 
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
-        return alert;
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: titleWidget,
+          content: contentWidget,
+          actions: [
+            TextButton(
+              child: Text(okText),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+            ),
+          ],
+        );
       },
     );
   }
@@ -60,37 +58,37 @@ class FcQuickDialog {
     if (!context.mounted) {
       return false;
     }
-    final noButton = TextButton(
-      child: Text(noText),
-      onPressed: () => Navigator.of(context).pop(false),
-    );
-    final yesButton = TextButton(
-      child: Text(yesText),
-      onPressed: () => Navigator.of(context).pop(true),
-    );
-    final buttons = <Widget>[yesButton, noButton];
-    if (cancelText != null) {
-      final cancelButton = TextButton(
-        child: Text(cancelText),
-        onPressed: () => Navigator.of(context).pop(null),
-      );
-      buttons.add(cancelButton);
-    }
-
     titleWidget ??= title == null ? null : Text(title);
     contentWidget ??= content == null ? null : SelectableText(content);
-
-    final alert = AlertDialog(
-      title: titleWidget,
-      content: contentWidget,
-      actions: buttons,
-    );
 
     return await showDialog<bool?>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
-        return alert;
+      builder: (BuildContext dialogContext) {
+        final buttons = <Widget>[
+          TextButton(
+            child: Text(yesText),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+          ),
+          TextButton(
+            child: Text(noText),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+          ),
+        ];
+        if (cancelText != null) {
+          buttons.add(
+            TextButton(
+              child: Text(cancelText),
+              onPressed: () => Navigator.of(dialogContext).pop(null),
+            ),
+          );
+        }
+
+        return AlertDialog(
+          title: titleWidget,
+          content: contentWidget,
+          actions: buttons,
+        );
       },
     );
   }
@@ -112,14 +110,14 @@ class FcQuickDialog {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (BuildContext dialogContext) => AlertDialog(
         title: titleWidget,
         content: error is Widget
             ? error
             : SelectableText(extractErrorMessage(error)),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(dialogContext).pop(),
             child: Text(okText),
           ),
         ],
@@ -132,24 +130,26 @@ class FcQuickDialog {
   /// If [subTitle] is not null, it will be displayed above the text field.
   /// If [password] is true, the text field will be obscured.
   /// [initialValue] is the initial value of the text field.
-  static Future<String?> textInput(BuildContext context,
-      {required String title,
-      required String okText,
-      required String? cancelText,
-      bool password = false,
-      String? initialValue,
-      String? subTitle}) async {
+  static Future<String?> textInput(
+    BuildContext context, {
+    required String title,
+    required String okText,
+    required String? cancelText,
+    bool password = false,
+    String? initialValue,
+    String? subTitle,
+  }) async {
     final controller = TextEditingController(text: initialValue);
-    void onOKDone() {
-      if (controller.text.isEmpty) {
-        return;
-      }
-      Navigator.pop(context, controller.text);
-    }
-
     return showDialog<String>(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
+        void onOKDone() {
+          if (controller.text.isEmpty) {
+            return;
+          }
+          Navigator.of(dialogContext).pop(controller.text);
+        }
+
         return AlertDialog(
           title: Text(title),
           content: Column(
@@ -163,7 +163,7 @@ class FcQuickDialog {
                 autofocus: true,
                 obscureText: password,
                 onSubmitted: (value) => onOKDone(),
-              )
+              ),
             ],
           ),
           actions: <Widget>[
@@ -171,13 +171,10 @@ class FcQuickDialog {
               TextButton(
                 child: Text(cancelText),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(dialogContext).pop();
                 },
               ),
-            TextButton(
-              onPressed: onOKDone,
-              child: Text(okText),
-            ),
+            TextButton(onPressed: onOKDone, child: Text(okText)),
           ],
         );
       },
