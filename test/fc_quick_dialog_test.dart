@@ -35,6 +35,31 @@ Future<void> _openAndDismiss(
 }
 
 void main() {
+  testWidgets('confirm returns null when the context is unmounted', (
+    tester,
+  ) async {
+    late BuildContext dialogContext;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) {
+            dialogContext = context;
+            return const SizedBox();
+          },
+        ),
+      ),
+    );
+    await tester.pumpWidget(const SizedBox());
+
+    final result = await FcQuickDialog.confirm(
+      dialogContext,
+      yesText: 'Yes',
+      noText: 'No',
+    );
+
+    expect(result, isNull);
+  });
+
   testWidgets('info dialog closes without popping a nested route', (
     tester,
   ) async {

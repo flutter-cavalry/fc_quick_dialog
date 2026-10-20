@@ -56,7 +56,7 @@ class FcQuickDialog {
     Widget? contentWidget,
   }) async {
     if (!context.mounted) {
-      return false;
+      return null;
     }
     titleWidget ??= title == null ? null : Text(title);
     contentWidget ??= content == null ? null : SelectableText(content);
