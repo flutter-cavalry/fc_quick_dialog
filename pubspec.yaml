@@ -1,5 +1,5 @@
 name: fc_quick_dialog
-description: "Quick and simple material-based dialogs like JavaScript's `alert`, `confirm` and `prompt`."
+description: "Lightweight Material dialogs for alerts, confirmations, errors, and text input—similar to JavaScript's alert(), confirm(), and prompt()."
 version: 1.0.0
 homepage: https://github.com/flutter-cavalry/fc_quick_dialog
 
