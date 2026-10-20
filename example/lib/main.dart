@@ -1,5 +1,5 @@
 import 'package:fc_quick_dialog/fc_quick_dialog.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 
 const colorSeed = Colors.deepPurple;
 
