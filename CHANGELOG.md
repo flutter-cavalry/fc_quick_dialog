@@ -1,3 +1,8 @@
+## 1.1.0
+
+- Fix some navigator issues.
+- Make sure `confirm` returns null when the context is unmounted.
+
 ## 1.0.0
 
 - Move to `material_ui` package.
